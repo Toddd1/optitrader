@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Magen David Adom</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #d32f2f;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        button {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+    <script>
+        function donateNow() {
+            window.location.href = 'https://secure.afmda.org/site/Donation2?df_id=2000&2000.donation=form1&s_src=GNRLWEB&FURL=UR';
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Support Magen David Adom</h1>
+        <p>Your support helps save lives in Israel</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About MDA</a></li>
+            <li><a href="#donate">Donate</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="about">
+            <h2>About Magen David Adom</h2>
+            <p>Magen David Adom is Israel’s national emergency medical, disaster, ambulance, and blood bank service. They provide life-saving services and emergency medical care.</p>
+        </section>
+
+        <section id="donate">
+            <h2>Make a Donation</h2>
+            <p>Your donation can make a difference. Support MDA today.</p>
+            <button onclick="donateNow()">Donate Now</button>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Email: support@mda-charity.org</p>
+            <p>Phone: +1 234 567 890</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Support Magen David Adom. All rights reserved.</p>
+    </footer>
+</body>
+</html>

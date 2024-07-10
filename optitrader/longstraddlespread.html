@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiTrader - Long Straddle Spread</title>
+    
+    <!-- Link to favicon -->
+    <link rel="icon" type="image/png" href="OptiTrader.png">
+
+    <!-- Link to Google Fonts for Kameron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kameron:wght@400..700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            font-family: "Kameron", serif; /* Applying Kameron font to header */
+            background-color: rgb(95, 23, 115);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center the navigation links */
+        }
+
+        nav li {
+            margin: 0 10px; /* Add some spacing between links */
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center; /* Center aligning content within main */
+        }
+
+        form label {
+            display: block;
+            margin: 0.5em 0 0.2em;
+        }
+
+        form input {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #6e1e7b;
+        }
+
+        .results {
+            margin-top: 2em;
+            background-color: #f8f9fa;
+            padding: 1em;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+
+    <!-- Define Kameron font classes for variable styling -->
+    <style>
+        .kameron-normal {
+            font-family: "Kameron", serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .kameron-bold {
+            font-family: "Kameron", serif;
+            font-optical-sizing: auto;
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>
+
+    <script>
+        function calculateLongStraddle() {
+            // Fetching user inputs
+            var strike_price = parseFloat(document.getElementById("strike_price").value);
+            var call_premium = parseFloat(document.getElementById("call_premium").value);
+            var put_premium = parseFloat(document.getElementById("put_premium").value);
+            var contracts = parseInt(document.getElementById("contracts").value);
+
+            // Calculating the spread details
+            var total_cost = (call_premium + put_premium) * contracts * 100;
+            var breakeven_upper = strike_price + (total_cost / (contracts * 100));
+            var breakeven_lower = strike_price - (total_cost / (contracts * 100));
+
+            // Displaying the results
+            var resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "<h3 class='kameron-bold'>Results:</h3>" +
+                                   "<p class='kameron-normal'>Total Cost: $" + total_cost.toFixed(2) + "</p>" +
+                                   "<p class='kameron-normal'>Breakeven Point (Upper): $" + breakeven_upper.toFixed(2) + "</p>" +
+                                   "<p class='kameron-normal'>Breakeven Point (Lower): $" + breakeven_lower.toFixed(2) + "</p>";
+        }
+    </script>
+</head>
+<body>
+    <header class="kameron-bold">
+        <h1>OptiTrader - Long Straddle Spread</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="back-link">&#8592; Home</a></li> <!-- Adding the arrow -->
+            <li><a href="about.html" target="_blank">About</a></li>
+            <li><a href="bullcallspread.html" target="_blank">Bull Call Spread</a></li>
+            <li><a href="bearcallspread.html" target="_blank">Bear Call Spread</a></li>
+            <li><a href="ironcondor.html" target="_blank">Iron Condor Spread</a></li>
+            <li><a href="ironbutterfly.html" target="_blank">Iron Butterfly Spread</a></li>
+            <li><a href="calendarspread.html" target="_blank">Calendar Spread</a></li>
+            <li><a href="longstraddlespread.html" target="_blank">Long Straddle Spread</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Long Straddle Spread</h2>
+            <p>The long straddle is an options strategy involving the purchase of a call and a put option with the same strike price and expiration date. Key features include:</p>
+            <ul>
+                <li>Profit from significant price movement in the underlying asset.</li>
+                <li>Unlimited profit potential due to the call option.</li>
+                <li>Limited risk to the premium paid.</li>
+            </ul>
+            <p>This strategy is used when anticipating a volatile market but uncertain about the direction.</p>
+        </section>
+
+        <section>
+            <h2>Calculate Long Straddle Spread</h2>
+            <form>
+                <label for="strike_price">Strike price of the options:</label>
+                <input type="number" id="strike_price" placeholder="Enter strike price" step="0.01">
+
+                <label for="call_premium">Premium of the bought call:</label>
+                <input type="number" id="call_premium" placeholder="Enter call premium" step="0.01">
+
+                <label for="put_premium">Premium of the bought put:</label>
+                <input type="number" id="put_premium" placeholder="Enter put premium" step="0.01">
+
+                <label for="contracts">Number of contracts:</label>
+                <input type="number" id="contracts" placeholder="Enter number of contracts">
+
+                <button type="button" onclick="calculateLongStraddle()">Calculate Long Straddle</button>
+            </form>
+
+            <div class="results" id="results">
+                <!-- Results will be displayed here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Todd Dumont 2024</p>
+    </footer>
+</body>
+</html>

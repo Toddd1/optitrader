@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiTrader</title>
+    <link rel="icon" type="image/png" href="OptiTrader.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kameron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        header {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .kameron-title {
+            font-family: "Kameron", serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allows wrapping for smaller screens */
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #111;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 100px; /* Adjust margin bottom to make space for footer */
+        }
+
+        .centered-image {
+            display: block;
+            margin: auto;
+            max-width: 50%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .section {
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            background-color: #fff;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .tabs {
+            overflow: hidden;
+            background: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tabs button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        .tabs button:hover {
+            background-color: #ddd;
+        }
+
+        .tabs button.active {
+            background-color: #ccc;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .kameron-title {
+                font-size: 2rem;
+            }
+
+            nav li {
+                margin: 0 5px;
+            }
+
+            nav li a {
+                padding: 10px 12px;
+            }
+
+            footer {
+                font-size: 0.9rem;
+            }
+
+            .centered-image {
+                max-width: 70%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kameron-title {
+                font-size: 1.5rem;
+            }
+
+            nav li a {
+                padding: 8px 10px;
+            }
+
+            footer {
+                font-size: 0.8rem;
+                padding: 0.8rem;
+            }
+
+            .centered-image {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="kameron-title">OptiTrader</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="about.html" target="_blank">About</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Spreads</a>
+                <div class="dropdown-content">
+                    <a href="bullcallspread.html" target="_blank">Bull Call Spread</a>
+                    <a href="bearcallspread.html" target="_blank">Bear Call Spread</a>
+                    <a href="ironcondor.html" target="_blank">Iron Condor Spread</a>
+                    <a href="ironbutterfly.html" target="_blank">Iron Butterfly Spread</a>
+                    <a href="calendarspread.html" target="_blank">Calendar Spread</a>
+                    <a href="longstraddlespread.html" target="_blank">Long Straddle Spread</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Single Options Strategies</a>
+                <div class="dropdown-content">
+                    <a href="longcall.html" target="_blank">Long Call</a>
+                    <a href="shortput.html" target="_blank">Short Put</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="section">
+            <h2>Welcome to OptiTrader</h2>
+            <p>OptiTrader offers powerful tools and resources to help you master options trading strategies. Whether you are a beginner or an experienced trader, our platform provides the insights and calculations you need to succeed.</p>
+            <img src="OptiTrader.png" alt="OptiTrader" class="centered-image" id="myImg">
+        </section>
+
+        <div id="Home" class="tab-content active">
+            <h3>Methodology</h3>
+            <p><strong>Comprehensive Analysis:</strong> We meticulously analyze market trends, volatility, and risk factors to identify optimal trading opportunities.</p>
+
+<p><strong>Strategic Insights:</strong> Leveraging advanced algorithms and data-driven models, we provide strategic insights to maximize returns and minimize risks.</p>
+
+<p><strong>Educational Resources:</strong> Empowering traders with knowledge through educational content, tutorials, and real-world examples.</p>
+
+<p><strong>Continuous Improvement:</strong> Staying at the forefront of technology and market developments to evolve and refine our strategies.</p>
+
+        </div>
+
+        <div id="Services" class="tab-content">
+            <h3>Services</h3>
+            <p>Services content goes here.</p>
+        </div>
+
+        <div id="Contact" class="tab-content">
+            <h3>Contact</h3>
+            <p>Contact content goes here.</p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; Todd Dumont 2024</p>
+    </footer>
+
+    <script>
+        // Scroll-to-Top Button
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopBtn.style.display = "block";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        }
+
+        // Modal Image
+        const modal = document.getElementById("myModal");
+        const img = document.getElementById("myImg");
+        const modalImg = document.getElementsByClassName("modal-content")[0];
+        const span = document.getElementsByClassName("close")[0];
+
+        img.onclick = function(){
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Tabs
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = "none";
+            }
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

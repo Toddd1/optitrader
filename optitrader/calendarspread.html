@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiTrader - Calendar Spread</title>
+    <!-- Specify the favicon -->
+    <link rel="icon" type="image/png" href="OptiTrader.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kameron:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .kameron-title {
+            font-family: "Kameron", serif;
+            font-optical-sizing: auto;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+        main {
+            padding: 2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            margin: 0.5em 0 0.2em;
+        }
+
+        form input {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .results {
+            margin-top: 2em;
+            background-color: #f8f9fa;
+            padding: 1em;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+    <script>
+        function calculateCalendarSpread() {
+            // Fetching user inputs
+            var buy_strike = parseFloat(document.getElementById("buy_strike").value);
+            var buy_premium = parseFloat(document.getElementById("buy_premium").value);
+            var sell_strike = parseFloat(document.getElementById("sell_strike").value);
+            var sell_premium = parseFloat(document.getElementById("sell_premium").value);
+            var buy_expiration = new Date(document.getElementById("buy_expiration").value);
+            var sell_expiration = new Date(document.getElementById("sell_expiration").value);
+            var contracts = parseInt(document.getElementById("contracts").value);
+
+            // Calculating the spread details
+            var net_debit = (buy_premium - sell_premium) * contracts * 100;
+            var max_profit = (sell_strike - buy_strike) * contracts * 100 - net_debit;
+            var max_loss = net_debit;
+            var breakeven = buy_strike + (net_debit / (contracts * 100));
+
+            // Displaying the results
+            var resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "<h3>Results:</h3>" +
+                                   "<p>Net Debit: $" + net_debit.toFixed(2) + "</p>" +
+                                   "<p>Maximum Profit: $" + max_profit.toFixed(2) + "</p>" +
+                                   "<p>Maximum Loss: $" + max_loss.toFixed(2) + "</p>" +
+                                   "<p>Breakeven Point: $" + breakeven.toFixed(2) + "</p>";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="kameron-title">OptiTrader - Calendar Spread</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="back-link">&#8592; Home</a></li>
+            <li><a href="about.html" target="_blank">About</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Calendar Spread</h2>
+            <p>The calendar spread is an options strategy involving the purchase of a longer-term option (call or put) and the sale of an equal number of shorter-term options of the same type and strike price. Key features include:</p>
+            <ul>
+                <li>Uses different expiration dates to take advantage of time decay.</li>
+                <li>Profitable if the underlying asset remains stable near the strike price.</li>
+                <li>Limited risk due to the offsetting positions.</li>
+            </ul>
+            <p>This strategy aims to capitalize on the faster time decay of the short-term option compared to the longer-term option, particularly if the stock price trades near the strike price.</p>
+        </section>
+
+        <section>
+            <h2>Calculate Calendar Spread</h2>
+            <form>
+                <label for="buy_strike">Strike price of the bought option:</label>
+                <input type="number" id="buy_strike" placeholder="Enter strike price" step="0.01">
+
+                <label for="buy_premium">Premium of the bought option:</label>
+                <input type="number" id="buy_premium" placeholder="Enter premium" step="0.01">
+
+                <label for="sell_strike">Strike price of the sold option:</label>
+                <input type="number" id="sell_strike" placeholder="Enter strike price" step="0.01">
+
+                <label for="sell_premium">Premium of the sold option:</label>
+                <input type="number" id="sell_premium" placeholder="Enter premium" step="0.01">
+
+                <label for="buy_expiration">Expiration date of the bought option:</label>
+                <input type="date" id="buy_expiration">
+
+                <label for="sell_expiration">Expiration date of the sold option:</label>
+                <input type="date" id="sell_expiration">
+
+                <label for="contracts">Number of contracts:</label>
+                <input type="number" id="contracts" placeholder="Enter number of contracts">
+
+                <button type="button" onclick="calculateCalendarSpread()">Calculate Calendar Spread</button>
+            </form>
+
+            <div class="results" id="results">
+                <!-- Results will be displayed here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Todd Dumont 2024</p>
+    </footer>
+</body>
+</html>

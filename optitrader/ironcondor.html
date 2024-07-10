@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiTrader - Iron Condor</title>
+    <!-- Specify the favicon -->
+    <link rel="icon" type="image/png" href="OptiTrader.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kameron:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .kameron-title {
+            font-family: "Kameron", serif;
+            font-optical-sizing: auto;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+        main {
+            padding: 2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            margin: 0.5em 0 0.2em;
+        }
+
+        form input {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .results {
+            margin-top: 2em;
+            background-color: #f8f9fa;
+            padding: 1em;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+    <script>
+        function calculateIronCondor() {
+            // Fetching user inputs
+            var buy_put_strike = parseFloat(document.getElementById("buy_put_strike").value);
+            var buy_put_premium = parseFloat(document.getElementById("buy_put_premium").value);
+            var sell_put_strike = parseFloat(document.getElementById("sell_put_strike").value);
+            var sell_put_premium = parseFloat(document.getElementById("sell_put_premium").value);
+            var buy_call_strike = parseFloat(document.getElementById("buy_call_strike").value);
+            var buy_call_premium = parseFloat(document.getElementById("buy_call_premium").value);
+            var sell_call_strike = parseFloat(document.getElementById("sell_call_strike").value);
+            var sell_call_premium = parseFloat(document.getElementById("sell_call_premium").value);
+            var contracts = parseInt(document.getElementById("contracts").value);
+
+            // Calculating the spread details
+            var net_premium_received = (sell_put_premium + sell_call_premium - buy_put_premium - buy_call_premium) * contracts * 100;
+            var max_loss = (sell_put_strike - buy_put_strike) * contracts * 100 - net_premium_received;
+            var breakeven_lower = sell_put_strike - (net_premium_received / (contracts * 100));
+            var breakeven_upper = sell_call_strike + (net_premium_received / (contracts * 100));
+
+            // Displaying the results
+            var resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "<h3>Results:</h3>" +
+                                   "<p>Net Premium Received: $" + net_premium_received.toFixed(2) + "</p>" +
+                                   "<p>Maximum Loss: $" + max_loss.toFixed(2) + "</p>" +
+                                   "<p>Breakeven Points: $" + breakeven_lower.toFixed(2) + " and $" + breakeven_upper.toFixed(2) + "</p>";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="kameron-title">OptiTrader - Iron Condor</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="back-link">&#8592; Home</a></li>
+            <li><a href="about.html" target="_blank">About</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Iron Condor</h2>
+            <p>The iron condor is an options strategy that involves buying and selling four different options with the same expiration date. Key features include:</p>
+            <ul>
+                <li>Profit if the underlying asset trades within a range around the sold strike prices.</li>
+                <li>Limited risk due to defined maximum loss.</li>
+                <li>Consists of two spreads: a bull put spread and a bear call spread.</li>
+            </ul>
+            <p>This strategy is suitable for stocks or indices with low volatility.</p>
+        </section>
+
+        <section>
+            <h2>Calculate Iron Condor</h2>
+            <form>
+                <label for="buy_put_strike">Strike price of the bought put:</label>
+                <input type="number" id="buy_put_strike" placeholder="Enter strike price" step="0.01">
+
+                <label for="buy_put_premium">Premium of the bought put:</label>
+                <input type="number" id="buy_put_premium" placeholder="Enter premium" step="0.01">
+
+                <label for="sell_put_strike">Strike price of the sold put:</label>
+                <input type="number" id="sell_put_strike" placeholder="Enter strike price" step="0.01">
+
+                <label for="sell_put_premium">Premium of the sold put:</label>
+                <input type="number" id="sell_put_premium" placeholder="Enter premium" step="0.01">
+
+                <label for="buy_call_strike">Strike price of the bought call:</label>
+                <input type="number" id="buy_call_strike" placeholder="Enter strike price" step="0.01">
+
+                <label for="buy_call_premium">Premium of the bought call:</label>
+                <input type="number" id="buy_call_premium" placeholder="Enter premium" step="0.01">
+
+                <label for="sell_call_strike">Strike price of the sold call:</label>
+                <input type="number" id="sell_call_strike" placeholder="Enter strike price" step="0.01">
+
+                <label for="sell_call_premium">Premium of the sold call:</label>
+                <input type="number" id="sell_call_premium" placeholder="Enter premium" step="0.01">
+
+                <label for="contracts">Number of contracts:</label>
+                <input type="number" id="contracts" placeholder="Enter number of contracts">
+
+                <button type="button" onclick="calculateIronCondor()">Calculate Iron Condor</button>
+            </form>
+
+            <div class="results" id="results">
+                <!-- Results will be displayed here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Todd Dumont 2024</p>
+    </footer>
+</body>
+</html>

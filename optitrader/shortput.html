@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiTrader - Short Put</title>
+    
+    <!-- Link to favicon -->
+    <link rel="icon" type="image/png" href="OptiTrader.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kameron:wght@400..700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .kameron-title {
+            font-family: "Kameron", serif;
+            font-optical-sizing: auto;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start; /* Align links to the left */
+        }
+
+        nav li {
+            margin: 0 10px; /* Add some spacing between links */
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center; /* Center aligning content within main */
+        }
+
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        footer {
+            background-color: rgb(95, 23, 115);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Additional sections styling */
+        .section {
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .calculator {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .calculator label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .calculator input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 3px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .calculator button {
+            padding: 10px;
+            font-size: 1rem;
+            background-color: rgb(95, 23, 115);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .calculator button:hover {
+            background-color: #6e1e7b;
+        }
+
+        .result {
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#calculateBreakEven').click(function(event) {
+                event.preventDefault();
+                var strikePrice = parseFloat($('#strikePrice').val());
+                var netCredit = parseFloat($('#netCredit').val());
+
+                if (!isNaN(strikePrice) && !isNaN(netCredit)) {
+                    var breakEvenPrice = strikePrice - netCredit;
+                    $('#breakEvenResult').text('Break-even Price: $' + breakEvenPrice.toFixed(2));
+                } else {
+                    $('#breakEvenResult').text('Please enter valid numbers.');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="kameron-title">OptiTrader - Short Put</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="back-link">&#8592; Home</a></li>
+            <li><a href="about.html" target="_blank">About</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="section">
+            <h2>Short Put</h2>
+            <p>The short put, or naked put, is a bullish options strategy where the investor sells a put option with the expectation that the underlying asset's price will rise or remain stable.</p>
+            <p>Key Points:</p>
+            <ul>
+                <li>Sell a put option to generate income.</li>
+                <li>Obligation to buy the underlying asset at the strike price if assigned.</li>
+                <li>Profit limited to the premium received.</li>
+                <li>Used when the investor expects the underlying asset's price to rise or remain stable.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Calculate Break-even Price</h2>
+            <div class="calculator">
+                <label for="strikePrice">Strike Price of Short Put Option:</label>
+                <input type="number" id="strikePrice" placeholder="Enter strike price..." required>
+                <label for="netCredit">Net Credit (Premium received):</label>
+                <input type="number" id="netCredit" placeholder="Enter net credit..." required>
+                <button id="calculateBreakEven">Calculate Break-even Price</button>
+            </div>
+            <div class="result" id="breakEvenResult"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Todd Dumont 2024</p>
+    </footer>
+</body>
+</html>
